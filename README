@@ -1,4 +1,13 @@
 wsgi demo
 
-demonstrating how to read 
-get data, post data, and cookies
+no framework. just standard python modules
+
+demonstrating how to:
+read GET data
+read POST data
+read cookies
+
+still missing:
+write cookies
+handle different pages
+handle error pages
