@@ -36,7 +36,7 @@ def getcookies(environ):
       cookies[key] = value
   return cookies
 
-def whatserver(environ, start_response):
+def index(environ, start_response):
   queryget = getqueryget(environ)
   querypost = getquerypost(environ)
   cookies = getcookies(environ)
@@ -57,6 +57,25 @@ def whatserver(environ, start_response):
   headers = [('Content-Type', 'text/html')]
   start_response(status, headers)
   return [bytes(htmlstring, 'utf8')]
+
+def errorpage(environ, start_response, path):
+  status = '404 NOT FOUND'
+  headers = [('Content-Type', 'text/plain')]
+  start_response(status, headers)
+  return [bytes('error 404 not found: ' + path, 'utf8')]
+
+def whatserver(environ, start_response):
+  path = environ.get('PATH_INFO', '').lstrip('/')
+  if path == '':
+    return index(environ, start_response)
+  elif path == 'demoget':
+    return demoget(environ, start_response)
+  elif path == 'demopost':
+    return demopost(environ, start_response)
+  elif path == 'democookie':
+    return democookie(environ, start_response)
+  else:
+    return errorpage(environ, start_response, path)
 
 def main():
   httpd = wsgiref.simple_server.make_server('', 31337, whatserver)
