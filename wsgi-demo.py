@@ -14,6 +14,22 @@ def getqueryget(environ):
       queryget[key] = html.escape(value[0])
   return queryget
 
+def demoget(environ, start_response):
+  queryget = getqueryget(environ)
+  htmlstring = f"""
+    <html>
+    <title>demo wsgi</title>
+    <body>
+    <p>query get</p>
+    {queryget}
+    </body>
+    </html>
+  """
+  status = '200 OK'
+  headers = [('Content-Type', 'text/html')]
+  start_response(status, headers)
+  return [bytes(htmlstring, 'utf8')]
+
 def getquerypost(environ):
   querypost = {}
   contentlengthstr = environ.get('CONTENT_LENGTH', '')
@@ -27,6 +43,22 @@ def getquerypost(environ):
       querypost[key] = html.escape(value[0])
   return querypost
 
+def demopost(environ, start_response):
+  querypost = getquerypost(environ)
+  htmlstring = f"""
+    <html>
+    <title>demo wsgi</title>
+    <body>
+    <p>query post</p>
+    {querypost}
+    </body>
+    </html>
+  """
+  status = '200 OK'
+  headers = [('Content-Type', 'text/html')]
+  start_response(status, headers)
+  return [bytes(htmlstring, 'utf8')]
+
 def getcookies(environ):
   cookies = {}
   cookiestr = environ['HTTP_COOKIE']
@@ -36,20 +68,30 @@ def getcookies(environ):
       cookies[key] = value
   return cookies
 
-def index(environ, start_response):
-  queryget = getqueryget(environ)
-  querypost = getquerypost(environ)
+def democookie(environ, start_response):
   cookies = getcookies(environ)
   htmlstring = f"""
     <html>
     <title>demo wsgi</title>
     <body>
-    <p>query get</p>
-    {queryget}
-    <p>query post</p>
-    {querypost}
     <p>cookies</p>
     {cookies}
+    </body>
+    </html>
+  """
+  status = '200 OK'
+  headers = [('Content-Type', 'text/html')]
+  start_response(status, headers)
+  return [bytes(htmlstring, 'utf8')]
+
+def index(environ, start_response):
+  htmlstring = f"""
+    <html>
+    <title>wsgi demo</title>
+    <body>
+    <p><a href="demoget">demoget</p>
+    <p><a href="demopost">demopost</p>
+    <p><a href="democookie">democookie</p>
     </body>
     </html>
   """
