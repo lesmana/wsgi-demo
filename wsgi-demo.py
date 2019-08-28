@@ -22,7 +22,7 @@ def demoget(environ, start_response):
     <body>
     <p>query get</p>
     {queryget}
-    <p><a href="/">back</p>
+    <p><a href="/">back</a></p>
     </body>
     </html>
   """
@@ -52,7 +52,7 @@ def demopost(environ, start_response):
     <body>
     <p>query post</p>
     {querypost}
-    <p><a href="/">back</p>
+    <p><a href="/">back</a></p>
     </body>
     </html>
   """
@@ -78,7 +78,7 @@ def democookie(environ, start_response):
     <body>
     <p>cookies</p>
     {cookies}
-    <p><a href="/">back</p>
+    <p><a href="/">back</a></p>
     </body>
     </html>
   """
