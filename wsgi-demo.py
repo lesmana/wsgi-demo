@@ -92,10 +92,10 @@ def index(environ, start_response):
     <html>
     <title>wsgi demo</title>
     <body>
-    <p><a href="demoget">demoget</p>
-    <p><a href="demopost">demopost</p>
-    <p><a href="democookie">democookie</p>
-    <p><a href="demoerror">demoerror</p>
+    <p><a href="demoget">demo get</a></p>
+    <p><a href="demopost">demo post</a></p>
+    <p><a href="democookie">demo cookie</a></p>
+    <p><a href="demoerror">demo error page</a> (page does not exist)</p>
     </body>
     </html>
   """
