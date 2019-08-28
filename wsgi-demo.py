@@ -123,7 +123,7 @@ def errorpage(environ, start_response, path):
   start_response(status, headers)
   return [bytes('error 404 not found: ' + path, 'utf8')]
 
-def wsgidemo(environ, start_response):
+def demoserver(environ, start_response):
   path = environ.get('PATH_INFO', '').lstrip('/')
   if path == '':
     return index(environ, start_response)
@@ -137,7 +137,7 @@ def wsgidemo(environ, start_response):
     return errorpage(environ, start_response, path)
 
 def main():
-  httpd = wsgiref.simple_server.make_server('', 31337, wsgidemo)
+  httpd = wsgiref.simple_server.make_server('', 31337, demoserver)
   print("Serving HTTP on port 31337")
   try:
     httpd.serve_forever()
