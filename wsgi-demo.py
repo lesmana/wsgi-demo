@@ -5,13 +5,16 @@ import urllib.parse
 import html
 import http.cookies
 
+import collections
+
 def getqueryget(environ):
-  queryget = {}
+  queryget = collections.defaultdict(list)
   querygetstr = environ.get('QUERY_STRING', '')
   if querygetstr:
     querygetraw = urllib.parse.parse_qs(querygetstr)
-    for key, value in querygetraw.items():
-      queryget[key] = html.escape(value[0])
+    for key, values in querygetraw.items():
+      for value in values:
+        queryget[key].append(html.escape(value))
   return queryget
 
 def demoget(environ, start_response):
@@ -22,7 +25,7 @@ def demoget(environ, start_response):
     <body>
     <p><a href="?foo=bar">one key</a></p>
     <p><a href="?foo=bar&bar=baz">two keys</a></p>
-    <p><a href="?foo=bar&foo=baz">one key with two values</a> (does not work yet)</p>
+    <p><a href="?foo=bar&foo=baz">one key with two values</a></p>
     <p>query get</p>
     {queryget}
     <p><a href="/">back</a></p>
