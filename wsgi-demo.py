@@ -58,8 +58,8 @@ def demopost(environ, start_response):
     <title>demo wsgi</title>
     <body>
     <form action="" method="post">
-    <p>foo: <input type="text" name="foo"></p>
-    <p>bar: <input type="text" name="bar"></p>
+    <p>foo: <input type="text" name="foo" value="1"></p>
+    <p>bar: <input type="text" name="bar" value="2"></p>
     <p>bar: <input type="text" name="bar"> (key repeated)</p>
     <p><input type="submit" value="submit"></p>
     </form>
