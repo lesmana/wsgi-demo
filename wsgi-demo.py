@@ -20,6 +20,9 @@ def demoget(environ, start_response):
     <html>
     <title>demo wsgi</title>
     <body>
+    <p><a href="?foo=bar">one key</a></p>
+    <p><a href="?foo=bar&bar=baz">two keys</a></p>
+    <p><a href="?foo=bar&foo=baz">one key with two values</a> (does not work yet)</p>
     <p>query get</p>
     {queryget}
     <p><a href="/">back</a></p>
