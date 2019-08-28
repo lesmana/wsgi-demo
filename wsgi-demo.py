@@ -21,7 +21,7 @@ def demoget(environ, start_response):
   queryget = getqueryget(environ)
   htmlstring = f"""
     <html>
-    <title>demo wsgi</title>
+    <title>wsgi get demo</title>
     <body>
     <p><a href="?foo=bar">one key</a></p>
     <p><a href="?foo=bar&bar=baz">two keys</a></p>
@@ -55,7 +55,7 @@ def demopost(environ, start_response):
   querypost = getquerypost(environ)
   htmlstring = f"""
     <html>
-    <title>demo wsgi</title>
+    <title>wsgi post demo</title>
     <body>
     <form action="" method="post">
     <p>foo: <input type="text" name="foo" value="1"></p>
@@ -87,7 +87,7 @@ def democookie(environ, start_response):
   cookies = getcookies(environ)
   htmlstring = f"""
     <html>
-    <title>demo wsgi</title>
+    <title>wsgi cookie demo</title>
     <body>
     <p>cookies</p>
     {cookies}
