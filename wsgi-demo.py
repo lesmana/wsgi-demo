@@ -38,7 +38,7 @@ def demoget(environ, start_response):
   return [bytes(htmlstring, 'utf8')]
 
 def getquerypost(environ):
-  querypost = {}
+  querypost = collections.defaultdict(list)
   contentlengthstr = environ.get('CONTENT_LENGTH', '')
   if contentlengthstr:
     contentlength = int(contentlengthstr)
@@ -46,8 +46,9 @@ def getquerypost(environ):
     querypostbytes = querypoststream.read(contentlength)
     querypoststr = str(querypostbytes, 'utf8')
     querypostraw = urllib.parse.parse_qs(querypoststr)
-    for key, value in querypostraw.items():
-      querypost[key] = html.escape(value[0])
+    for key, values in querypostraw.items():
+      for value in values:
+        querypost[key].append(html.escape(value))
   return querypost
 
 def demopost(environ, start_response):
@@ -58,6 +59,7 @@ def demopost(environ, start_response):
     <body>
     <form action="" method="post">
     foo: <input type="text" name="foo">
+    bar: <input type="text" name="bar">
     bar: <input type="text" name="bar">
     <input type="submit" value="submit">
     </form>
