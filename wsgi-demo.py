@@ -56,6 +56,11 @@ def demopost(environ, start_response):
     <html>
     <title>demo wsgi</title>
     <body>
+    <form action="" method="post">
+    foo: <input type="text" name="foo">
+    bar: <input type="text" name="bar">
+    <input type="submit" value="submit">
+    </form>
     <p>query post</p>
     {querypost}
     <p><a href="/">back</a></p>
