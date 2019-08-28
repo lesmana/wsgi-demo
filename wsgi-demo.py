@@ -25,7 +25,7 @@ def demoget(environ, start_response):
     <body>
     <p><a href="?foo=bar">one key</a></p>
     <p><a href="?foo=bar&bar=baz">two keys</a></p>
-    <p><a href="?foo=bar&foo=baz">one key with two values</a></p>
+    <p><a href="?foo=bar&foo=baz">one key repeated</a></p>
     <p>query get</p>
     {queryget}
     <p><a href="/">back</a></p>
@@ -60,7 +60,7 @@ def demopost(environ, start_response):
     <form action="" method="post">
     <p>foo: <input type="text" name="foo"></p>
     <p>bar: <input type="text" name="bar"></p>
-    <p>bar: <input type="text" name="bar"> (duplicate key)</p>
+    <p>bar: <input type="text" name="bar"> (key repeated)</p>
     <p><input type="submit" value="submit"></p>
     </form>
     <p>query post</p>
