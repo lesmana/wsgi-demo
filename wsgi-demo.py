@@ -95,6 +95,7 @@ def index(environ, start_response):
     <p><a href="demoget">demoget</p>
     <p><a href="demopost">demopost</p>
     <p><a href="democookie">democookie</p>
+    <p><a href="demoerror">demoerror</p>
     </body>
     </html>
   """
