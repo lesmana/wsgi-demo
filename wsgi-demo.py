@@ -23,17 +23,26 @@ def getqueryget(environ):
         queryget[key].append(html.escape(value))
   return queryget
 
+def formatquery(query):
+  html = io.StringIO()
+  for key, values in query.items():
+    for value in values:
+      html.write(f'<li>{key}: {value}</li>')
+  return html.getvalue()
+
 def demoget(environ, start_response):
   queryget = getqueryget(environ)
   htmlstring = f"""
     <html>
     <title>wsgi get demo</title>
     <body>
-    <p><a href="?foo=bar">one key</a></p>
-    <p><a href="?foo=bar&bar=baz">two keys</a></p>
-    <p><a href="?foo=bar&foo=baz">one key repeated</a></p>
+    <p><a href="?foo=bar">one key (?foo=bar)</a></p>
+    <p><a href="?foo=bar&bar=baz">two keys (?foo=bar&bar=baz)</a></p>
+    <p><a href="?foo=bar&foo=baz">one key repeated (?foo=bar&foo=baz)</a></p>
     <p>query get</p>
-    {queryget}
+    <ul>
+    {formatquery(queryget)}
+    </ul>
     <p><a href="/">back</a></p>
     </body>
     </html>
