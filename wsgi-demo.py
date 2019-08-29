@@ -11,6 +11,7 @@ import html
 import http.cookies
 
 import collections
+import io
 
 def getqueryget(environ):
   queryget = collections.defaultdict(list)
@@ -86,6 +87,12 @@ def getcookies(environ):
     cookies.load(cookiestr)
   return cookies
 
+def formatcookies(cookies):
+  html = io.StringIO()
+  for cookie in cookies.values():
+    html.write(f'<li>{cookie.OutputString()}</li>')
+  return html.getvalue()
+
 def democookie(environ, start_response):
   cookies = getcookies(environ)
   htmlstring = f"""
@@ -93,7 +100,9 @@ def democookie(environ, start_response):
     <title>wsgi cookie demo</title>
     <body>
     <p>cookies</p>
-    {cookies}
+    <ul>
+    {formatcookies(cookies)}
+    </ul>
     <p><a href="setcookie1">set cookie 1</a></p>
     <p><a href="setcookie2">set cookie 2</a></p>
     <p><a href="delcookie1">del cookie 1</a></p>
