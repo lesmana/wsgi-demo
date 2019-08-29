@@ -82,7 +82,7 @@ def demopost(environ, start_response):
 
 def getcookies(environ):
   cookies = http.cookies.SimpleCookie()
-  cookiestr = environ['HTTP_COOKIE']
+  cookiestr = environ.get('HTTP_COOKIE', '')
   if cookiestr:
     cookies.load(cookiestr)
   return cookies
