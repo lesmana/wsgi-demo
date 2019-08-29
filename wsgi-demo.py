@@ -91,12 +91,38 @@ def democookie(environ, start_response):
     <body>
     <p>cookies</p>
     {cookies}
-    <p><a href="/">back</a></p>
+    <p><a href="setcookie1">set cookie 1</a></p>
+    <p><a href="setcookie2">set cookie 2</a></p>
+    <p><a href="delcookie1">del cookie 1</a></p>
+    <p><a href="delcookie2">del cookie 2</a></p>
+    <p><a href="/">back to main</a></p>
     </body>
     </html>
   """
   status = '200 OK'
   headers = [('Content-Type', 'text/html')]
+  start_response(status, headers)
+  return [bytes(htmlstring, 'utf8')]
+
+def cookieaction(environ, start_response, action, number):
+  htmlstring = f"""
+    <html>
+    <title>wsgi cookie demo action</title>
+    <p>cookie {number} is {action}</p>
+    <p><a href="democookie">back to cookie page</a></p>
+    <body>
+    </body>
+    </html>
+  """
+  cookie = http.cookies.SimpleCookie()
+  cookie[number] = f'cookie number {number}'
+  if action == 'del':
+    cookie[number]['max-age'] = 0
+  status = '200 OK'
+  headers = [
+        ('Content-Type', 'text/html'),
+        ('Set-Cookie', cookie[number].OutputString())
+        ]
   start_response(status, headers)
   return [bytes(htmlstring, 'utf8')]
 
@@ -133,6 +159,14 @@ def demoserver(environ, start_response):
     return demopost(environ, start_response)
   elif path == 'democookie':
     return democookie(environ, start_response)
+  elif path == 'setcookie1':
+    return cookieaction(environ, start_response, 'set', '1')
+  elif path == 'setcookie2':
+    return cookieaction(environ, start_response, 'set', '2')
+  elif path == 'delcookie1':
+    return cookieaction(environ, start_response, 'del', '1')
+  elif path == 'delcookie2':
+    return cookieaction(environ, start_response, 'del', '2')
   else:
     return errorpage(environ, start_response, path)
 
