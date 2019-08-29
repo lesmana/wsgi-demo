@@ -80,12 +80,10 @@ def demopost(environ, start_response):
   return [bytes(htmlstring, 'utf8')]
 
 def getcookies(environ):
-  cookies = {}
+  cookies = http.cookies.SimpleCookie()
   cookiestr = environ['HTTP_COOKIE']
   if cookiestr:
-    cookiesraw = http.cookies.SimpleCookie(cookiestr)
-    for key, value in cookiesraw.items():
-      cookies[key] = value
+    cookies.load(cookiestr)
   return cookies
 
 def democookie(environ, start_response):
