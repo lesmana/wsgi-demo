@@ -6,8 +6,11 @@ demonstrating how to:
 read GET data
 read POST data
 read cookies
+write cookies
 handle different pages
-handle error pages
+handle error pages (404)
+send plain text response
 
 still missing:
-write cookies
+uploading file
+downloading file
