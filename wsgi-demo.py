@@ -79,7 +79,9 @@ def demopost(environ, start_response):
     <p><input type="submit" value="submit"></p>
     </form>
     <p>query post</p>
-    {querypost}
+    <ul>
+    {formatquery(querypost)}
+    </ul>
     <p><a href="/">back</a></p>
     </body>
     </html>
