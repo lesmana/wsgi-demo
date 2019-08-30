@@ -1,6 +1,13 @@
 wsgi demo
 
-no framework. just standard python modules
+this is a simple wsgi server
+to demonstrate how to do things like read get or post data.
+it uses no framework. just standard python modules.
+
+motivation: i wanted to learn wsgi to write mock servers
+to test web scrapers or automation scripts.
+the mock servers do not need to be performant or secure.
+they just need to be similar enough to the real servers.
 
 demonstrating how to:
 read GET data
