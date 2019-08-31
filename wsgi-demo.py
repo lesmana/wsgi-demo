@@ -32,7 +32,7 @@ def formatquery(query):
 
 def demoget(environ, start_response):
   queryget = getqueryget(environ)
-  htmlstring = f"""
+  htmlstring = f'''
     <html>
     <title>wsgi get demo</title>
     <body>
@@ -46,7 +46,7 @@ def demoget(environ, start_response):
     <p><a href="/">back</a></p>
     </body>
     </html>
-  """
+  '''
   status = '200 OK'
   headers = [('Content-Type', 'text/html')]
   start_response(status, headers)
@@ -68,7 +68,7 @@ def getquerypost(environ):
 
 def demopost(environ, start_response):
   querypost = getquerypost(environ)
-  htmlstring = f"""
+  htmlstring = f'''
     <html>
     <title>wsgi post demo</title>
     <body>
@@ -85,7 +85,7 @@ def demopost(environ, start_response):
     <p><a href="/">back</a></p>
     </body>
     </html>
-  """
+  '''
   status = '200 OK'
   headers = [('Content-Type', 'text/html')]
   start_response(status, headers)
@@ -106,7 +106,7 @@ def formatcookies(cookies):
 
 def democookie(environ, start_response):
   cookies = getcookies(environ)
-  htmlstring = f"""
+  htmlstring = f'''
     <html>
     <title>wsgi cookie demo</title>
     <body>
@@ -121,7 +121,7 @@ def democookie(environ, start_response):
     <p><a href="/">back to main</a></p>
     </body>
     </html>
-  """
+  '''
   status = '200 OK'
   headers = [('Content-Type', 'text/html')]
   start_response(status, headers)
@@ -129,7 +129,7 @@ def democookie(environ, start_response):
 
 def cookieaction(environ, start_response, action, number):
   cookiename = f'cookie{number}'
-  htmlstring = f"""
+  htmlstring = f'''
     <html>
     <title>wsgi cookie demo action</title>
     <p>cookie {number} is {action}</p>
@@ -137,7 +137,7 @@ def cookieaction(environ, start_response, action, number):
     <body>
     </body>
     </html>
-  """
+  '''
   cookie = http.cookies.SimpleCookie()
   cookie[cookiename] = f'cookie number {number}'
   if action == 'del':
@@ -151,7 +151,7 @@ def cookieaction(environ, start_response, action, number):
   return [bytes(htmlstring, 'utf8')]
 
 def index(environ, start_response):
-  htmlstring = f"""
+  htmlstring = f'''
     <html>
     <title>wsgi demo</title>
     <body>
@@ -161,7 +161,7 @@ def index(environ, start_response):
     <p><a href="demoerror">demo error page</a> (page does not exist)</p>
     </body>
     </html>
-  """
+  '''
   status = '200 OK'
   headers = [('Content-Type', 'text/html')]
   start_response(status, headers)
@@ -196,7 +196,7 @@ def demoserver(environ, start_response):
 
 def main():
   httpd = wsgiref.simple_server.make_server('', 31337, demoserver)
-  print("Serving HTTP on port 31337")
+  print('Serving HTTP on port 31337')
   try:
     httpd.serve_forever()
   except KeyboardInterrupt:
