@@ -47,10 +47,11 @@ def demoget(environ, start_response):
     </body>
     </html>
   '''
+  htmlbytes = bytes(htmlstring, 'utf8')
   status = '200 OK'
   headers = [('Content-Type', 'text/html')]
   start_response(status, headers)
-  return [bytes(htmlstring, 'utf8')]
+  return [htmlbytes]
 
 def getquerypost(environ):
   querypost = collections.defaultdict(list)
@@ -86,10 +87,11 @@ def demopost(environ, start_response):
     </body>
     </html>
   '''
+  htmlbytes = bytes(htmlstring, 'utf8')
   status = '200 OK'
   headers = [('Content-Type', 'text/html')]
   start_response(status, headers)
-  return [bytes(htmlstring, 'utf8')]
+  return [htmlbytes]
 
 def getcookies(environ):
   cookies = http.cookies.SimpleCookie()
@@ -122,10 +124,11 @@ def democookie(environ, start_response):
     </body>
     </html>
   '''
+  htmlbytes = bytes(htmlstring, 'utf8')
   status = '200 OK'
   headers = [('Content-Type', 'text/html')]
   start_response(status, headers)
-  return [bytes(htmlstring, 'utf8')]
+  return [htmlbytes]
 
 def cookieaction(environ, start_response, action, number):
   cookiename = f'cookie{number}'
@@ -138,6 +141,7 @@ def cookieaction(environ, start_response, action, number):
     </body>
     </html>
   '''
+  htmlbytes = bytes(htmlstring, 'utf8')
   cookie = http.cookies.SimpleCookie()
   cookie[cookiename] = f'cookie number {number}'
   if action == 'del':
@@ -148,7 +152,7 @@ def cookieaction(environ, start_response, action, number):
         ('Set-Cookie', cookie[cookiename].OutputString())
         ]
   start_response(status, headers)
-  return [bytes(htmlstring, 'utf8')]
+  return [htmlbytes]
 
 def index(environ, start_response):
   htmlstring = f'''
@@ -162,10 +166,11 @@ def index(environ, start_response):
     </body>
     </html>
   '''
+  htmlbytes = bytes(htmlstring, 'utf8')
   status = '200 OK'
   headers = [('Content-Type', 'text/html')]
   start_response(status, headers)
-  return [bytes(htmlstring, 'utf8')]
+  return [htmlbytes]
 
 def errorpage(environ, start_response, path):
   status = '404 NOT FOUND'
