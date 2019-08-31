@@ -49,7 +49,7 @@ def demoget(environ, start_response):
   '''
   htmlbytes = bytes(htmlstring, 'utf8')
   status = '200 OK'
-  headers = [('Content-Type', 'text/html')]
+  headers = [('Content-Type', 'text/html; charset=utf-8')]
   start_response(status, headers)
   return [htmlbytes]
 
@@ -89,7 +89,7 @@ def demopost(environ, start_response):
   '''
   htmlbytes = bytes(htmlstring, 'utf8')
   status = '200 OK'
-  headers = [('Content-Type', 'text/html')]
+  headers = [('Content-Type', 'text/html; charset=utf-8')]
   start_response(status, headers)
   return [htmlbytes]
 
@@ -126,7 +126,7 @@ def democookie(environ, start_response):
   '''
   htmlbytes = bytes(htmlstring, 'utf8')
   status = '200 OK'
-  headers = [('Content-Type', 'text/html')]
+  headers = [('Content-Type', 'text/html; charset=utf-8')]
   start_response(status, headers)
   return [htmlbytes]
 
@@ -148,7 +148,7 @@ def cookieaction(environ, start_response, action, number):
     cookie[cookiename]['max-age'] = 0
   status = '200 OK'
   headers = [
-        ('Content-Type', 'text/html'),
+        ('Content-Type', 'text/html; charset=utf-8'),
         ('Set-Cookie', cookie[cookiename].OutputString())
         ]
   start_response(status, headers)
@@ -168,7 +168,7 @@ def index(environ, start_response):
   '''
   htmlbytes = bytes(htmlstring, 'utf8')
   status = '200 OK'
-  headers = [('Content-Type', 'text/html')]
+  headers = [('Content-Type', 'text/html; charset=utf-8')]
   start_response(status, headers)
   return [htmlbytes]
 
@@ -176,7 +176,7 @@ def errorpage(environ, start_response, path):
   textstring = 'error 404 not found: ' + path
   textbytes = bytes(textstring, 'utf8')
   status = '404 NOT FOUND'
-  headers = [('Content-Type', 'text/plain')]
+  headers = [('Content-Type', 'text/plain; charset=utf-8')]
   start_response(status, headers)
   return [textbytes]
 
