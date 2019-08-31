@@ -173,10 +173,12 @@ def index(environ, start_response):
   return [htmlbytes]
 
 def errorpage(environ, start_response, path):
+  textstring = 'error 404 not found: ' + path
+  textbytes = bytes(textstring, 'utf8')
   status = '404 NOT FOUND'
   headers = [('Content-Type', 'text/plain')]
   start_response(status, headers)
-  return [bytes('error 404 not found: ' + path, 'utf8')]
+  return [textbytes]
 
 def demoserver(environ, start_response):
   path = environ.get('PATH_INFO', '').lstrip('/')
