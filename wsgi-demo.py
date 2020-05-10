@@ -10,7 +10,6 @@ import urllib.parse
 import html
 import http.cookies
 
-import collections
 import io
 
 def getqueryget(environ):
