@@ -24,11 +24,11 @@ def getqueryget(environ):
   return queryget
 
 def formatquery(query):
-  html = io.StringIO()
+  htmlstr = io.StringIO()
   for key, values in query.items():
     for value in values:
-      html.write(f'<li>{key}: {value}</li>')
-  return html.getvalue()
+      htmlstr.write(f'<li>{key}: {value}</li>')
+  return htmlstr.getvalue()
 
 def demoget(environ, start_response):
   queryget = getqueryget(environ)
@@ -101,10 +101,10 @@ def getcookies(environ):
   return cookies
 
 def formatcookies(cookies):
-  html = io.StringIO()
+  htmlstr = io.StringIO()
   for cookie in cookies.values():
-    html.write(f'<li>{cookie.OutputString()}</li>')
-  return html.getvalue()
+    htmlstr.write(f'<li>{cookie.OutputString()}</li>')
+  return htmlstr.getvalue()
 
 def democookie(environ, start_response):
   cookies = getcookies(environ)
