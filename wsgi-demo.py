@@ -31,6 +31,7 @@ def formatquery(query):
 
 def demoget(environ, start_response):
   queryget = getqueryget(environ)
+  querygetstr = formatquery(queryget)
   htmlstring = f'''
     <html>
     <title>wsgi get demo</title>
@@ -40,7 +41,7 @@ def demoget(environ, start_response):
     <p><a href="?foo=bar&foo=baz">one key repeated (?foo=bar&foo=baz)</a></p>
     <p>query get</p>
     <ul>
-    {formatquery(queryget)}
+    {querygetstr}
     </ul>
     <p><a href="/">back</a></p>
     </body>
@@ -65,6 +66,7 @@ def getquerypost(environ):
 
 def demopost(environ, start_response):
   querypost = getquerypost(environ)
+  querypoststr = formatquery(querypost)
   htmlstring = f'''
     <html>
     <title>wsgi post demo</title>
@@ -77,7 +79,7 @@ def demopost(environ, start_response):
     </form>
     <p>query post</p>
     <ul>
-    {formatquery(querypost)}
+    {querypoststr}
     </ul>
     <p><a href="/">back</a></p>
     </body>
@@ -106,13 +108,14 @@ def formatcookies(cookies):
 
 def democookie(environ, start_response):
   cookies = getcookies(environ)
+  cookiesstr = formatcookies(cookies)
   htmlstring = f'''
     <html>
     <title>wsgi cookie demo</title>
     <body>
     <p>cookies</p>
     <ul>
-    {formatcookies(cookies)}
+    {cookiesstr}
     </ul>
     <p><a href="setcookie1">set cookie1</a></p>
     <p><a href="setcookie2">set cookie2</a></p>
