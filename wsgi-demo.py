@@ -14,19 +14,18 @@ import collections
 import io
 
 def getqueryget(environ):
-  queryget = collections.defaultdict(list)
+  queryget = {}
   querygetstr = environ.get('QUERY_STRING', '')
   if querygetstr:
-    querygetraw = urllib.parse.parse_qs(querygetstr)
-    for key, values in querygetraw.items():
-      for value in values:
-        queryget[key].append(html.escape(value))
+    queryget = urllib.parse.parse_qs(querygetstr)
   return queryget
 
 def formatquery(query):
   htmlstr = io.StringIO()
-  for key, values in query.items():
-    for value in values:
+  for rawkey, rawvalues in query.items():
+    for rawvalue in rawvalues:
+      key = html.escape(rawkey)
+      value = html.escape(rawvalue)
       htmlstr.write(f'<li>{key}: {value}</li>')
   return htmlstr.getvalue()
 
@@ -54,17 +53,14 @@ def demoget(environ, start_response):
   return [htmlbytes]
 
 def getquerypost(environ):
-  querypost = collections.defaultdict(list)
+  querypost = {}
   contentlengthstr = environ.get('CONTENT_LENGTH', '')
   if contentlengthstr:
     contentlength = int(contentlengthstr)
     querypoststream = environ['wsgi.input']
     querypostbytes = querypoststream.read(contentlength)
     querypoststr = str(querypostbytes, 'utf8')
-    querypostraw = urllib.parse.parse_qs(querypoststr)
-    for key, values in querypostraw.items():
-      for value in values:
-        querypost[key].append(html.escape(value))
+    querypost = urllib.parse.parse_qs(querypoststr)
   return querypost
 
 def demopost(environ, start_response):
@@ -103,7 +99,9 @@ def getcookies(environ):
 def formatcookies(cookies):
   htmlstr = io.StringIO()
   for cookie in cookies.values():
-    htmlstr.write(f'<li>{cookie.OutputString()}</li>')
+    rawcookiestr = cookie.OutputString()
+    cookiestr = html.escape(rawcookiestr)
+    htmlstr.write(f'<li>{cookiestr}</li>')
   return htmlstr.getvalue()
 
 def democookie(environ, start_response):
