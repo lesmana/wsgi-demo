@@ -13,11 +13,11 @@ import http.cookies
 import io
 
 def getqueryget(environ):
-  queryget = {}
+  getdata = {}
   querygetstr = environ.get('QUERY_STRING', '')
   if querygetstr:
-    queryget = urllib.parse.parse_qs(querygetstr)
-  return queryget
+    getdata = urllib.parse.parse_qs(querygetstr)
+  return getdata
 
 def formatquery(query):
   htmlstr = io.StringIO()
@@ -29,8 +29,8 @@ def formatquery(query):
   return htmlstr.getvalue()
 
 def demoget(environ, start_response):
-  queryget = getqueryget(environ)
-  querygetstr = formatquery(queryget)
+  getdata = getqueryget(environ)
+  getdatastr = formatquery(getdata)
   htmlstring = f'''
     <html>
     <title>wsgi get demo</title>
@@ -40,7 +40,7 @@ def demoget(environ, start_response):
     <p><a href="?foo=bar&foo=baz">one key repeated (?foo=bar&foo=baz)</a></p>
     <p>query get</p>
     <ul>
-    {querygetstr}
+    {getdatastr}
     </ul>
     <p><a href="/">back</a></p>
     </body>
@@ -53,19 +53,19 @@ def demoget(environ, start_response):
   return [htmlbytes]
 
 def getquerypost(environ):
-  querypost = {}
+  postdata = {}
   contentlengthstr = environ.get('CONTENT_LENGTH', '')
   if contentlengthstr:
     contentlength = int(contentlengthstr)
     querypoststream = environ['wsgi.input']
     querypostbytes = querypoststream.read(contentlength)
     querypoststr = str(querypostbytes, 'utf8')
-    querypost = urllib.parse.parse_qs(querypoststr)
-  return querypost
+    postdata = urllib.parse.parse_qs(querypoststr)
+  return postdata
 
 def demopost(environ, start_response):
-  querypost = getquerypost(environ)
-  querypoststr = formatquery(querypost)
+  postdata = getquerypost(environ)
+  postdatastr = formatquery(postdata)
   htmlstring = f'''
     <html>
     <title>wsgi post demo</title>
@@ -78,7 +78,7 @@ def demopost(environ, start_response):
     </form>
     <p>query post</p>
     <ul>
-    {querypoststr}
+    {postdatastr}
     </ul>
     <p><a href="/">back</a></p>
     </body>
@@ -92,17 +92,17 @@ def demopost(environ, start_response):
 
 def getcookies(environ):
   cookies = http.cookies.SimpleCookie()
-  cookiestr = environ.get('HTTP_COOKIE', '')
-  if cookiestr:
-    cookies.load(cookiestr)
+  httpcookiestr = environ.get('HTTP_COOKIE', '')
+  if httpcookiestr:
+    cookies.load(httpcookiestr)
   return cookies
 
 def formatcookies(cookies):
   htmlstr = io.StringIO()
   for cookie in cookies.values():
-    rawcookiestr = cookie.OutputString()
-    cookiestr = html.escape(rawcookiestr)
-    htmlstr.write(f'<li>{cookiestr}</li>')
+    unescapedcookiestr = cookie.OutputString()
+    escapedcookiestr = html.escape(unescapedcookiestr)
+    htmlstr.write(f'<li>{escapedcookiestr}</li>')
   return htmlstr.getvalue()
 
 def democookie(environ, start_response):
