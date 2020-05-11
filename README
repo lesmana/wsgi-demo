@@ -16,6 +16,7 @@ read cookies
 write cookies
 delete cookies
 handle different pages
+favicon
 send 404
 plain text response
 

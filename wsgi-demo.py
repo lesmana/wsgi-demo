@@ -9,7 +9,7 @@ import wsgiref.simple_server
 import urllib.parse
 import html
 import http.cookies
-
+import base64
 import io
 
 def getqueryget(environ):
@@ -172,6 +172,22 @@ def index(environ, start_response):
   start_response(status, headers)
   return [htmlbytes]
 
+def favicon(environ, start_response):
+  status = '200 OK'
+  faviconbase64 = (
+    b'AAABAAEAEBAQAAEABAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAA'
+    b'AAAAAAAEAAAAAAAAAAAAAAAAP//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+    b'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAERERERERAAEREQA'
+    b'AEREQARERAAARERABEREREREREAEREQAAEREQARERAAARERABEREAABEREAEREQAA'
+    b'EREQARERAAARERABEREAABEREAEREQAAEREQARERAAARERABEREAABEREAARERERE'
+    b'REAAAAAAAAAAADAAwAAgAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+    b'AAAAAAAAAAAAAAAAAAAAAAAIABAADAAwAA'
+  )
+  faviconbytes = base64.b64decode(faviconbase64)
+  headers = [('Content-Type', 'image/x-icon')]
+  start_response(status, headers)
+  return [faviconbytes]
+
 def errorpage(environ, start_response, path):
   textstring = 'error 404 not found: ' + path
   textbytes = bytes(textstring, 'utf8')
@@ -198,6 +214,8 @@ def demoserver(environ, start_response):
     return cookieaction(environ, start_response, 'del', 1)
   elif path == 'delcookie2':
     return cookieaction(environ, start_response, 'del', 2)
+  elif path == 'favicon.ico':
+    return favicon(environ, start_response)
   else:
     return errorpage(environ, start_response, path)
 
